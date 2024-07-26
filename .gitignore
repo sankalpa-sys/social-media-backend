@@ -1,1 +1,11 @@
-node_modules
+# dependencies
+node_modules/
+
+# optional npm cache directory
+.npm
+
+# optional eslint cache
+.eslintcache
+
+# dotenv environment variables file
+.env
