@@ -3,6 +3,10 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+
+
 
 router.post("/register", async (req, res)=> {
     const {name, email, password, isAdmin, profilePicture, posts,followers} = req.body;

@@ -60,4 +60,40 @@ router.delete("/:id", validateToken, async (req, res) => {
     }
 });
 
+router.post("/like/:id", validateToken, async (req, res)=> {
+    try{
+        const currentUser = req.user;
+        const post = await Post.findById(req.params.id).populate("user");
+        if(!post) return res.status(404).json({message: "Post not found"});
+        if(post.likes.includes(currentUser._id)){
+            //handle unlike
+            post.likes = post.likes.filter((likeUserId)=> likeUserId.toString() !== currentUser._id.toString());
+            await post.save();
+        }
+        else{
+            //handle like
+            post.likes.push(currentUser._id);
+            await post.save();
+        }
+        res.status(200).json(post);
+    }catch (e) {
+        res.status(400).json({
+            message: "An error ocurred while liking the post"
+        })
+    }
+})
+
+router.get('/likes/:id', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id).populate('likes');
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+
+        res.status(200).json(post.likes);
+    } catch (e) {
+        res.status(400).json({
+            message: 'An error occurred while getting likes of the post'
+        });
+    }
+});
+
 module.exports = router;
