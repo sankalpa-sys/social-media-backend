@@ -1,5 +1,3 @@
-//create user routes in backend/routes/user.js without validation
-
 const express = require('express');
 const router = express.Router();
 const User = require("../models/User");
@@ -35,7 +33,7 @@ router.post("/login", async (req, res)=> {
     if(!user) return res.status(400).json("User with this email doesn't exist");
     const validPass = await bcrypt.compare(password, user.password);
     if(!validPass) return res.status(400).json("Password is wrong");
-    const token = jwt.sign({_id: user._id, isAdmin: user.isAdmin, email: user.email}, "sankalpasecretkey");
+    const token = jwt.sign({_id: user._id, isAdmin: user.isAdmin, email: user.email}, process.env.TOKEN_SECRET);
     res.header("auth-token", "Bearer" + " " + token).send(token);
 }
 );

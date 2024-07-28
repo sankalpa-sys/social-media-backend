@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
+ require('dotenv').config();
 const mongoose = require("mongoose");
 
 const port = process.env.PORT || 8000;
@@ -21,7 +21,7 @@ app.use("/api/follower", followerRoute)
 app.use("/api/user", userRoute)
 
 //database connection
-mongoose.connect("mongodb+srv://sankalpa115:sankalpa115@social-media-dev-cluste.tp8gfnl.mongodb.net/?retryWrites=true&w=majority&appName=social-media-dev-cluster").then((res)=> {
+mongoose.connect(process.env.MONGO_URI).then((res)=> {
     console.log("Database connected");
 }).catch((err)=> {
     console.log(err);
