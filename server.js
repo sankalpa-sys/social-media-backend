@@ -8,6 +8,7 @@ const app = express();
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/post");
 const followerRoute = require("./routes/follower");
+const userRoute = require("./routes/user");
 
 //middleware
 app.use(cors());
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api/auth", authRoute)
 app.use("/api/post", postRoute)
 app.use("/api/follower", followerRoute)
+app.use("/api/user", userRoute)
 
 //database connection
 mongoose.connect("mongodb+srv://sankalpa115:sankalpa115@social-media-dev-cluste.tp8gfnl.mongodb.net/?retryWrites=true&w=majority&appName=social-media-dev-cluster").then((res)=> {
