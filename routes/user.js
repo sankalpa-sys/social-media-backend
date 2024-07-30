@@ -35,4 +35,14 @@ router.get("/suggested-users", validateToken, async (req, res) => {
     }
 });
 
+router.get("/:id", validateToken, async (req, res) => {
+    try{
+        const user = await User.findById(req.params.id).populate("posts")
+        const {password, ...rest} = user._doc
+        res.status(200).json(rest);
+    }catch (e) {
+        res.status(500).json(e);
+    }
+});
+
 module.exports = router;
