@@ -45,4 +45,28 @@ router.get("/:id", validateToken, async (req, res) => {
     }
 });
 
+router.put("/:id", validateToken, async (req, res) => {
+    if(req.user._id === req.params.id || req.user.isAdmin){
+        try{
+            // Extract only the allowed fields from req.body
+            const { name, bio, profilePicture } = req.body;
+            const updateFields = {};
+            if (name) updateFields.name = name;
+            if (bio) updateFields.bio = bio;
+            if (profilePicture) updateFields.profilePicture = profilePicture;
+
+            // Update the user with the allowed fields
+            const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+                $set: updateFields
+            }, { new: true });
+
+            res.status(200).json(updatedUser);
+        } catch (e) {
+            res.status(500).json(e);
+        }
+    } else {
+        res.status(403).json("You can update only your account!");
+    }
+});
+
 module.exports = router;

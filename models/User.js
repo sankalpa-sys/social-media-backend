@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659651_1280.png"
     },
+    bio: {
+        type: String,
+        max: 1024,
+        default: ""
+    },
     password: {
         type: String,
         required: true,
