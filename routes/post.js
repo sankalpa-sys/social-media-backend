@@ -29,7 +29,6 @@ router.post("/create", validateToken, async (req, res) => {
 router.get('/', validateToken, async(req, res)=> {
     //get posts of followers only
     const currentUser = req.user;
-    console.log("current user",currentUser)
     try{
         const user = await User.findById(currentUser._id);
         if(!user) return res.status(400).json("User not found");
