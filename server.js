@@ -10,6 +10,8 @@ const postRoute = require("./routes/post");
 const followerRoute = require("./routes/follower");
 const userRoute = require("./routes/user");
 const commentRoute = require("./routes/comment");
+const conversationRoute = require("./routes/conversation");
+const messageRoute = require("./routes/message");
 
 //middleware
 app.use(cors());
@@ -21,6 +23,8 @@ app.use("/api/post", postRoute)
 app.use("/api/follower", followerRoute)
 app.use("/api/user", userRoute)
 app.use("/api/comment", commentRoute)
+app.use("/api/conversation", conversationRoute)
+app.use("/api/message", messageRoute)
 
 //database connection
 mongoose.connect(process.env.MONGO_URI).then((res)=> {
