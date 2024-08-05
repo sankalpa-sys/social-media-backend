@@ -36,8 +36,11 @@ router.get("/suggested-users", validateToken, async (req, res) => {
 });
 
 router.get("/:id", validateToken, async (req, res) => {
-    try{
-        const user = await User.findById(req.params.id).populate("posts")
+    try{const user = await User.findById(req.params.id)
+        .populate({
+            path: "posts",
+            populate: { path: "user" } // Nested populate without select
+        });
         const {password, ...rest} = user._doc
         res.status(200).json(rest);
     }catch (e) {
